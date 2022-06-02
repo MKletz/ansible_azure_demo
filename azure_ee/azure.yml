@@ -11,8 +11,8 @@
   - name: Create VM with defaults
     azure_rm_virtualmachine:
       resource_group: "{{ resource_group }}"
-      name: "{{ name }}"
-      admin_username: "{{ username }}"
+      name: "{{ vm_name }}"
+      admin_username: "{{ vm_username }}"
       admin_password: "{{ temp_password }}"
       image:
         offer: WindowsServer
