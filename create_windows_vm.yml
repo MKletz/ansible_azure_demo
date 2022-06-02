@@ -87,11 +87,9 @@
           purpose: demo
       register: vm_facts
 
-    - name: Show password
+    - name: VM access information
       debug:
-        var: win_admin_password
-
-    - name: Show public IP
-      debug:
-        var: vm_facts.ansible_facts.azure_vm.properties.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.publicIPAddress.properties.ipAddress
-        #msg: "{{ vm_facts.ansible_facts.azure_vm.networkProfile.networkInterfaces[0].ipConfigurations[0].publicIPAddress.ipAddress }}"
+        msg: 
+          - "Username: {{ win_admin_user }}"
+          - "Password: {{ win_admin_password }}"
+          - "Public IP: {{ vm_facts.ansible_facts.azure_vm.properties.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.publicIPAddress.properties.ipAddress }}"
