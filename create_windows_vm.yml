@@ -85,7 +85,7 @@
         tags:
           deployment: ansible
           purpose: demo
-        register: vm_facts
+      register: vm_facts
 
     - name: Show password
       debug:
