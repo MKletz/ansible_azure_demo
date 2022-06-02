@@ -1,0 +1,27 @@
+---
+- hosts: localhost
+  gather_facts: no
+
+  tasks:
+  - name: Setting host facts using complex arguments
+    set_fact:
+      temp_password: "{{ lookup('community.general.random_string', min_lower=1, min_upper=1, min_special=1, min_numeric=1) }}"
+      # Example result: ['&Qw2|E[-']
+  
+  - name: Create VM with defaults
+    azure_rm_virtualmachine:
+      resource_group: "{{ resource_group }}"
+      name: "{{ name }}"
+      admin_username: "{{ username }}"
+      admin_password: "{{ temp_password }}"
+      image:
+        offer: WindowsServer
+        publisher: MicrosoftWindowsServer
+        sku: '2022-datacenter-azure-edition-core'
+        version: latest
+      vm_size: Standard_B1ls
+      managed_disk_type: Standard_LRS
+
+  - name: Show temp password
+    debug:
+      var: temp_password
