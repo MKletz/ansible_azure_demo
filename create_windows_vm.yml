@@ -93,4 +93,4 @@
 
     - name: Show public IP
       debug:
-        msg: "{{ vm_facts['networkProfile'].networkInterfaces[0].ipConfigurations[0].publicIPAddress.ipAddress }}"
+        msg: "{{ vm_facts.ansible_facts.azure_vm.networkProfile.networkInterfaces[0].ipConfigurations[0].publicIPAddress.ipAddress }}"
