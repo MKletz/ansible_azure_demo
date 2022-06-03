@@ -36,32 +36,32 @@
 
     - name: Generate dynamic names for resources
       set_fact:
-        win_public_ip_name: "{{ win_vm_name.replace('-','_') }}_ip_name"
-        win_nic_name: "{{ win_vm_name.replace('-','_') }}_nic"
-        win_admin_password: "{{ lookup('community.general.random_string', min_lower=1, min_upper=1, min_special=1, min_numeric=1) }}"
+        public_ip_name: "{{ vm_name.replace('-','_') }}_ip_name"
+        nic_name: "{{ vm_name.replace('-','_') }}_nic"
+        admin_password: "{{ lookup('community.general.random_string', min_lower=1, min_upper=1, min_special=1, min_numeric=1) }}"
 
     - name: Create virtual network interface card
       azure_rm_networkinterface:
         resource_group: "{{ resource_group_name }}"
-        name: "{{ win_nic_name }}"
+        name: "{{ nic_name }}"
         virtual_network: "{{ vnet_name }}"
         subnet: "{{ subnet_name }}"
-        public_ip_name: "{{ win_public_ip_name }}"
+        public_ip_name: "{{ public_ip_name }}"
         security_group: "{{ network_sec_group_name }}"
 
     - name: Create VM
       azure_rm_virtualmachine:
         resource_group: "{{ resource_group_name }}"
-        name: "{{ win_vm_name }}"
+        name: "{{ vm_name }}"
         os_type: Windows
-        vm_size: "{{ win_vm_size }}"
-        admin_username: "{{ win_admin_user }}"
-        admin_password: "{{ win_admin_password }}"
-        network_interfaces: "{{ win_nic_name }}"
+        vm_size: "{{ vm_size }}"
+        admin_username: "{{ admin_user }}"
+        admin_password: "{{ admin_password }}"
+        network_interfaces: "{{ nic_name }}"
         image:
           offer: WindowsServer
           publisher: MicrosoftWindowsServer
-          sku: "{{ win_vm_sku }}"
+          sku: "{{ vm_sku }}"
           version: latest
         tags:
           deployment: ansible
@@ -71,6 +71,6 @@
     - name: VM access information
       debug:
         msg: 
-          - "Username: {{ win_admin_user }}"
-          - "Password: {{ win_admin_password }}"
+          - "Username: {{ admin_user }}"
+          - "Password: {{ admin_password }}"
           - "Public IP: {{ vm_facts.ansible_facts.azure_vm.properties.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.publicIPAddress.properties.ipAddress }}"
