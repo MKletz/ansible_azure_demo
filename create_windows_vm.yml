@@ -57,7 +57,7 @@
     - name: Create virtual network interface card
       azure_rm_networkinterface:
         resource_group: "{{ resource_group_name }}"
-        name: "{{ win_nic_name }}"
+        name: "{{ win_vm_name.replace('-','_') }}_nic"
         virtual_network: "{{ vnet_name }}"
         subnet: "{{ subnet_name }}"
         public_ip_name: "{{ win_public_ip_name }}"
