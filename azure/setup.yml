@@ -1,0 +1,64 @@
+---
+user_message: |
+  You will need to update SNOW credentials with your SNOW instance details if you plan to demo this.
+
+controller_components:
+  - credential_types
+  - credentials
+  - job_templates
+
+controller_credential_types:
+  - name: "SNOW Credential Type"
+    description: "credential to store SNOW"
+    kind: cloud
+    inputs:
+      fields:
+        - id: SNOW_USERNAME
+          type: string
+          label: Service Now Username
+        - id: SNOW_INSTANCE
+          type: string
+          label: Service Now Instance Name (devXXXXX)
+        - id: SNOW_PASSWORD
+          type: string
+          label: Service Now Password
+          secret: true
+      required:
+        - SNOW_USERNAME
+        - SNOW_INSTANCE
+        - SNOW_PASSWORD
+    injectors:
+      extra_vars:
+        snow_username: "{% raw %}{  { SNOW_USERNAME  }}{% endraw %}"
+        snow_password: "{% raw %}{  { SNOW_PASSWORD  }}{% endraw %}"
+        snow_instance: "{% raw %}{  { SNOW_INSTANCE  }}{% endraw %}"
+
+controller_credentials:
+- name: SNOW Credential
+  description: Credentials
+  organization: Default
+  credential_type: "SNOW Credential Type"
+  inputs:
+    SNOW_USERNAME: "admin" #update after install
+    SNOW_PASSWORD: "XXX"   #update after install
+    SNOW_INSTANCE: "devXxxxx" #update after install
+
+- name: "AZURE / Create Windows VM"
+  job_type: run
+  inventory: "Workshop Inventory"
+  project: "Azure Repo"
+  playbook: "azure/create_windows_vm.yml"
+  credentials:
+  - "Azure"
+  extra_vars:
+    resource_group_name: "openenv-jz6rs" #update after install
+    region: "eastus"
+    vnet_cidr: "10.0.0.0/16"
+    subnet_cidr: "10.0.1.0/24"
+    vnet_name: "demo_vnet"
+    subnet_name: "demo_subnet"
+    network_sec_group_name: "demo_sec_group"
+    vm_name: "WIN-ansible"
+    vm_size: "Standard_DS1_v2"
+    vm_sku: "2022-Datacenter"
+    admin_user: "azureuser"
