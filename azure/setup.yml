@@ -49,7 +49,7 @@ controller_templates:
   inventory: "Workshop Inventory"
   project: "Azure Repo"
   playbook: "azure/create_windows_vm.yml"
-  execution_environment: "azure_ee"
+  #execution_environment: "azure_ee"
   credentials:
   - "Azure"
   extra_vars:
