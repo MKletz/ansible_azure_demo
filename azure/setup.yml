@@ -43,7 +43,7 @@ controller_credentials:
     SNOW_PASSWORD: "XXX"   #update after install
     SNOW_INSTANCE: "devXxxxx" #update after install
 
-job_templates:
+controller_templates:
 - name: "AZURE / Create Windows VM"
   job_type: run
   inventory: "Workshop Inventory"
