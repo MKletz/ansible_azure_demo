@@ -2,7 +2,6 @@ collections:
   - name: community.general
   - name: servicenow.itsm
   - name: ansible.controller
-  - name: azure.azcollection
     version: 4.1.1
   - name: redhat_cop.controller_configuration
     version: 2.1.1
