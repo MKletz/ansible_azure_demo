@@ -1,3 +1,2 @@
 collections:
   - name: azure.azcollection
-  - name: servicenow.servicenow
