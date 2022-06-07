@@ -82,7 +82,7 @@
           username: "{{ snow_username }}"
           password: "{{ snow_password }}"
         state: new
-        caller: some.user
+        caller: "Ansible"
         short_description: "{{ vm_name }} is ready"
         description: "stuff"
         impact: low
