@@ -51,7 +51,7 @@ controller_templates:
   playbook: "azure/create_windows_vm.yml"
   #execution_environment: "azure_ee"
   credentials:
-  - "Azure"
+    - "Azure"
   extra_vars:
     resource_group_name: "openenv-jz6rs" #update after install
     region: "eastus"
