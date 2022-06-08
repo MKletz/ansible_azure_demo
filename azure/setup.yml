@@ -47,20 +47,20 @@ controller_templates:
 - name: "AZURE / Create Windows VM"
   job_type: run
   inventory: "Workshop Inventory"
-  project: "Azure Repo"
+  project: "ansible_azure_demo"
   playbook: "azure/create_windows_vm.yml"
-  #execution_environment: "azure_ee"
+  execution_environment: "azure_ee"
   credentials:
     - "Azure"
-  #extra_vars:
-  #  resource_group_name: "openenv-jz6rs" #update after install
-  #  region: "eastus"
-  #  vnet_cidr: "10.0.0.0/16"
-  #  subnet_cidr: "10.0.1.0/24"
-  #  vnet_name: "demo_vnet"
-  #  subnet_name: "demo_subnet"
-  #  network_sec_group_name: "demo_sec_group"
-  #  vm_name: "WIN-ansible"
-  #  vm_size: "Standard_DS1_v2"
-  #  vm_sku: "2022-Datacenter"
-  #  admin_user: "azureuser"
+  extra_vars:
+    resource_group_name: "openenv-jz6rs" #update after install
+    region: "eastus"
+    vnet_cidr: "10.0.0.0/16"
+    subnet_cidr: "10.0.1.0/24"
+    vnet_name: "demo_vnet"
+    subnet_name: "demo_subnet"
+    network_sec_group_name: "demo_sec_group"
+    vm_name: "WIN-ansible"
+    vm_size: "Standard_DS1_v2"
+    vm_sku: "2022-Datacenter"
+    admin_user: "azureuser"
