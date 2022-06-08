@@ -6,4 +6,3 @@ collections:
   - name: redhat_cop.controller_configuration
     version: 2.1.1
   - name: azure.azcollection
-    version: 1.12.0
