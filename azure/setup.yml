@@ -49,7 +49,7 @@ controller_templates:
   inventory: "Workshop Inventory"
   project: "ansible_azure_demo"
   playbook: "azure/create_windows_vm.yml"
-  execution_environment: "azure_ee"
+  execution_environment: "Ansible Engine 2.9 execution environment"
   credentials:
     - "Azure"
   extra_vars:
