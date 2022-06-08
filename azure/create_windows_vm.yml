@@ -68,17 +68,21 @@
           purpose: demo
       register: vm_facts
 
+    - name: Setting IP fact
+      set_fact:
+        public_ip: "{{ vm_facts.ansible_facts.azure_vm.properties.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.publicIPAddress.properties.ipAddress }}"
+
     - name: VM access information
       debug:
         msg: 
           - "Username: {{ admin_user }}"
           - "Password: {{ admin_password }}"
-          - "Public IP: {{ vm_facts.ansible_facts.azure_vm.properties.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.publicIPAddress.properties.ipAddress }}"
+          - "Public IP: {{ public_ip }}"
 
     - name: Create a configuration item
       servicenow.itsm.configuration_item:
         name: "{{ vm_name }}"
-        short_description: "Windows Server Azure VM"
+        short_description: "Windows Server Azure VM at {{ public_ip }}"
         sys_class_name: cmdb_ci_server
         assigned_to: "{{ requested_for }}"
         environment: production
