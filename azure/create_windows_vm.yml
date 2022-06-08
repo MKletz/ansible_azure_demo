@@ -74,3 +74,14 @@
           - "Username: {{ admin_user }}"
           - "Password: {{ admin_password }}"
           - "Public IP: {{ vm_facts.ansible_facts.azure_vm.properties.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.publicIPAddress.properties.ipAddress }}"
+
+    - name: Create a configuration item
+      servicenow.itsm.configuration_item:
+        name: "{{ vm_name }}"
+        short_description: "Windows Server Azure VM"
+        sys_class_name: cmdb_ci_server
+        assigned_to: "{{ requested_for }}"
+        environment: production
+        category: Hardware
+        other:
+          model_number: "{{ vm_sku }}"
