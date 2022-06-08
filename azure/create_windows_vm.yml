@@ -85,3 +85,5 @@
         category: Hardware
         other:
           model_number: "{{ vm_sku }}"
+        instance:
+          host: "{{ SN_HOST }}"
