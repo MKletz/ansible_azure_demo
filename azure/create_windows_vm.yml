@@ -87,3 +87,6 @@
           model_number: "{{ vm_sku }}"
         instance:
           host: "{{ SN_HOST }}"
+          grant_type: "password"
+          username: "{{ SN_USERNAME }}"
+          password: "{{ SN_PASSWORD }}"
