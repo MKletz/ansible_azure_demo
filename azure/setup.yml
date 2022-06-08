@@ -23,10 +23,6 @@ controller_credential_types:
         - id: SN_HOST
           type: string
           label: Service Now Instance URL
-        - id: SN_GRANT_TYPE
-          type: string
-          label: Auth grant type
-          default: password
       required:
         - SN_USERNAME
         - SN_PASSWORD
@@ -34,9 +30,10 @@ controller_credential_types:
 
     injectors:
       extra_vars:
-        snow_username: "{% raw %}{  { SNOW_USERNAME  }}{% endraw %}"
-        snow_password: "{% raw %}{  { SNOW_PASSWORD  }}{% endraw %}"
-        snow_instance: "{% raw %}{  { SNOW_INSTANCE  }}{% endraw %}"
+        SN_USERNAME: "{% raw %}{  { SN_USERNAME  }}{% endraw %}"
+        SN_PASSWORD: "{% raw %}{  { SN_PASSWORD  }}{% endraw %}"
+        SN_HOST: "{% raw %}{  { SN_HOST  }}{% endraw %}"
+        SN_GRANT_TYPE: "password"
 
 controller_credentials:
 - name: SNOW Credential
