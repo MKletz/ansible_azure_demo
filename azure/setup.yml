@@ -41,9 +41,9 @@ controller_credentials:
   organization: Default
   credential_type: "SNOW Credential Type"
   inputs:
-    SNOW_USERNAME: "admin" #update after install
-    SNOW_PASSWORD: "XXX"   #update after install
-    SNOW_INSTANCE: "devXxxxx" #update after install
+    SN_USERNAME: "admin" #update after install
+    SN_PASSWORD: "XXX"   #update after install
+    SN_HOST: "devXxxxx" #update after install
 
 controller_templates:
 - name: "AZURE / Create Windows VM"
