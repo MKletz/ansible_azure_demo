@@ -66,6 +66,7 @@
         tags:
           deployment: ansible
           purpose: demo
+          os: windows
       register: vm_facts
 
     - name: Setting IP fact
