@@ -74,3 +74,8 @@ controller_templates:
         type: text
         variable: vm_name
         required: true
+      - question_name: Requested for?
+        type: text
+        variable: requested_for
+        required: true
+
