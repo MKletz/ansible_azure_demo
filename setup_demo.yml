@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
+- hosts: "{{ HOSTS | default('localhost') }}"
   gather_facts: no
   vars_files:
     - "{{demo}}/setup.yml"
