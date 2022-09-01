@@ -67,6 +67,9 @@
           deployment: ansible
           purpose: demo
           os: windows
+        winrm:
+          certificate_url: https://demo6754893265973824234.vault.azure.net/secrets/winrm/35dc3e8151ed495f87c4207709dac6ac
+          protocol: https
       register: vm_facts
 
     - name: Setting IP fact
