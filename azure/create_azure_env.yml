@@ -37,7 +37,7 @@
         - name: Create key vault instance
           azure_rm_keyvault:
             resource_group: "{{ resource_group_name }}"
-            vault_name: "{{ resource_group_name }}_vault"
+            vault_name: "DemoVault"
             enabled_for_deployment: true
             vault_tenant: 1ce7852f-dcf3-42bc-afe6-3bf81ab984fb
             sku:
