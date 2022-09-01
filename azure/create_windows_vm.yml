@@ -54,7 +54,7 @@
 
     - name: Get public IP
       set_fact:
-        public_ip: "Public IP: {{ vm_facts.ansible_facts.azure_vm.properties.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.publicIPAddress.properties.ipAddress }}"
+        public_ip: "{{ vm_facts.ansible_facts.azure_vm.properties.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.publicIPAddress.properties.ipAddress }}"
 
     - name: wait for the WinRM port to come online
       wait_for:
