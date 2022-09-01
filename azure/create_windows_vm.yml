@@ -68,9 +68,9 @@
           purpose: demo
           os: windows
         winrm:
-          - protocol: https
-          - source_vault: /subscriptions/ede7f891-835c-4128-af5b-0e53848e54e7/resourceGroups/openenv-bf2nq/providers/Microsoft.KeyVault/vaults/demo6754893265973824234
-          - certificate_url: https://demo6754893265973824234.vault.azure.net/secrets/winrm/35dc3e8151ed495f87c4207709dac6ac
+          - protocol: http
+          #- source_vault: /subscriptions/ede7f891-835c-4128-af5b-0e53848e54e7/resourceGroups/openenv-bf2nq/providers/Microsoft.KeyVault/vaults/demo6754893265973824234
+          #- certificate_url: https://demo6754893265973824234.vault.azure.net/secrets/winrm/35dc3e8151ed495f87c4207709dac6ac
       register: vm_facts
 
     - name: Setting IP fact
