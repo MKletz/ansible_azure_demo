@@ -50,6 +50,12 @@
                   - list
                   - set
                   - delete
+                certificates:
+                  - get
+                  - list
+                  - delete
+                  - create
+                  - import
 
         - name: Create private key for cert
           community.crypto.openssl_privatekey:
