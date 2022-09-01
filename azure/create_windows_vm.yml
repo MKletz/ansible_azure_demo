@@ -61,7 +61,7 @@
     - name: wait for the WinRM port to come online
       wait_for:
         port: 5986
-        host: '{{ public_ipaddresses[ip_address] }}'
+        host: '{{ public_ipaddresses[0].ip_address }}'
         timeout: 600
 
     - name: VM access information
@@ -69,7 +69,7 @@
         msg: 
           - "Username: {{ admin_user }}"
           - "Password: {{ admin_password }}"
-          - "Public IP: {{ public_ipaddresses[ip_address] }}"
+          - "Public IP: {{ public_ipaddresses[0].ip_address }}"
 
     - name: Create a configuration item
       servicenow.itsm.configuration_item:
