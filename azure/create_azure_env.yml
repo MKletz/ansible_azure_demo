@@ -50,3 +50,24 @@
                   - list
                   - set
                   - delete
+
+        - name: Create private key for cert
+          community.crypto.openssl_privatekey:
+            path: /tmp/azure_certificate.key
+        
+        - name: Create simple self-signed certificate
+          community.crypto.x509_certificate:
+            path: /tmp/azure_certificate.pem
+            privatekey_path: /tmp/azure_certificate.key
+            provider: selfsigned
+
+        - name: Slurp self-signed certificate
+          ansible.builtin.slurp:
+            src: /tmp/azure_certificate.pem
+          register: base64_certificate
+
+        - name: Create a secret
+          azure_rm_keyvaultsecret:
+            secret_name: winrm_cert
+            secret_value: "{{ base64_certificate }}"
+            keyvault_uri: "https://{{ vault_name }}.vault.azure.net/"
