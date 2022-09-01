@@ -2,6 +2,7 @@
 - name: Create Azure Windows VM
   hosts: localhost
   connection: local
+  gather_facts: false
   tasks:
     - name: Generate dynamic names for resources
       set_fact:
