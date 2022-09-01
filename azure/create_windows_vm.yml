@@ -36,15 +36,28 @@
           deployment: ansible
           purpose: demo
           os: windows
-        winrm:
-          - protocol: https
-          - certificate_url: https://demo6754893265973824234.vault.azure.net/secrets/winrm/35dc3e8151ed495f87c4207709dac6ac
-          - source_vault: /subscriptions/ede7f891-835c-4128-af5b-0e53848e54e7/resourceGroups/openenv-bf2nq/providers/Microsoft.KeyVault/vaults/demo6754893265973824234
       register: vm_facts
+
+    - name: Create VM script extension to enable HTTPS WinRM listener
+      azure_rm_virtualmachineextension:
+        name: winrm-extension
+        resource_group: "{{ resource_group_name }}"
+        virtual_machine_name: "{{ vm_name }}"
+        publisher: Microsoft.Compute
+        virtual_machine_extension_type: CustomScriptExtension
+        type_handler_version: '1.9'
+        settings: '{"fileUris": ["https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1"],"commandToExecute": "powershell -ExecutionPolicy Unrestricted -File ConfigureRemotingForAnsible.ps1"}'
+        auto_upgrade_minor_version: true
 
     - name: Setting IP fact
       set_fact:
         public_ip: "{{ vm_facts.ansible_facts.azure_vm.properties.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.publicIPAddress.properties.ipAddress }}"
+
+    - name: wait for the WinRM port to come online
+      wait_for:
+        port: 5986
+        host: '{{ public_ip }}'
+        timeout: 600
 
     - name: VM access information
       debug:
