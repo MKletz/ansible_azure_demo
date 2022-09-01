@@ -1,9 +1,5 @@
 ---
-- hosts: test1234_5aa8
-  vars:
-    ansible_connection: winrm
-    ansible_winrm_transport: ntlm
-    ansible_winrm_server_cert_validation: ignore
+- hosts: os_windows
   tasks:
 
   - name: Test connection
