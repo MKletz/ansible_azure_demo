@@ -45,7 +45,32 @@ controller_credentials:
     SN_PASSWORD: "XXX"   #update after install
     SN_HOST: "devXxxxx" #update after install
 
+- name: Azure
+  description: Credentials
+  organization: Default
+  credential_type: "Microsoft Azure Resource Manager"
+  inputs:
+    Subscription_ID: "changeme"
+
+- name: Azure VM
+  description: Credentials
+  organization: Default
+  credential_type: "Machine"
+  inputs:
+    username: "{{ admin_user }}"
+    password: "{{ admin_password }}"
+
 controller_templates:
+- name: "AZURE / Create Infra"
+  job_type: run
+  inventory: "Workshop Inventory"
+  project: "ansible_azure_demo"
+  playbook: "azure/create_azure_env.yml"
+  execution_environment: "Ansible Engine 2.9 execution environment"
+  credentials:
+    - "Azure"
+  survey_enabled: false
+
 - name: "AZURE / Create Windows VM"
   job_type: run
   inventory: "Workshop Inventory"
@@ -54,17 +79,6 @@ controller_templates:
   execution_environment: "Ansible Engine 2.9 execution environment"
   credentials:
     - "Azure"
-  extra_vars:
-    resource_group_name: "openenv-bf2nq" #update after install
-    region: "eastus"
-    vnet_cidr: "10.0.0.0/16"
-    subnet_cidr: "10.0.1.0/24"
-    vnet_name: "demo_vnet"
-    subnet_name: "demo_subnet"
-    network_sec_group_name: "demo_sec_group"
-    vm_size: "Standard_DS1_v2"
-    vm_sku: "2022-Datacenter"
-    admin_user: "azureuser"
   survey_enabled: true
   survey:
     name: ''
@@ -78,4 +92,3 @@ controller_templates:
         type: text
         variable: requested_for
         required: true
-

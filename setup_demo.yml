@@ -2,6 +2,7 @@
 - hosts: "{{ HOSTS | default('localhost') }}"
   gather_facts: no
   vars_files:
+    - "{{demo}}/vars.yml"
     - "{{demo}}/setup.yml"
   vars:
     controller_validate_certs: false
