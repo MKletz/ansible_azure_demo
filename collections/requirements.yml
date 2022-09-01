@@ -1,6 +1,7 @@
 collections:
   - name: community.general
   - name: servicenow.itsm
+  - name: ansible.windows
   - name: ansible.controller
     version: 4.1.1
   - name: redhat_cop.controller_configuration
