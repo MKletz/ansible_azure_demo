@@ -1,6 +1,5 @@
 collections:
   - name: community.general
-  - name: community.crypto
   - name: servicenow.itsm
   - name: ansible.controller
     version: 4.1.1
