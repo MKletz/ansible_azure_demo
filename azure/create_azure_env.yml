@@ -1,0 +1,52 @@
+---
+    - name: Create Azure Environment
+      hosts: localhost
+      connection: local
+      tasks:
+        - name: Create virtual network
+          azure_rm_virtualnetwork:
+            resource_group: "{{ resource_group_name }}"
+            name: "{{ vnet_name }}"
+            address_prefixes: "{{ vnet_cidr }}"
+    
+        - name: Add subnet
+          azure_rm_subnet:
+            resource_group: "{{ resource_group_name }}"
+            name: "{{ subnet_name }}"
+            address_prefix: "{{ subnet_cidr }}"
+            virtual_network: "{{ vnet_name }}"
+    
+        - name: Create Network Security Group that allows SSH and RDP
+          azure_rm_securitygroup:
+            resource_group: "{{ resource_group_name }}"
+            name: "{{ network_sec_group_name }}"
+            rules:
+              - name: SSH
+                protocol: Tcp
+                destination_port_range: 22
+                access: Allow
+                priority: 1001
+                direction: Inbound
+              - name: RDP
+                protocol: Tcp
+                destination_port_range: 3389
+                access: Allow
+                priority: 1002
+                direction: Inbound
+
+        - name: Create key vault instance
+          azure_rm_keyvault:
+            resource_group: "{{ resource_group_name }}"
+            vault_name: "{{ resource_group_name }}_vault"
+            enabled_for_deployment: true
+            vault_tenant: 1ce7852f-dcf3-42bc-afe6-3bf81ab984fb
+            sku:
+              name: standard
+            access_policies:
+              - tenant_id: 1ce7852f-dcf3-42bc-afe6-3bf81ab984fb
+                object_id: 07cbc26a-2c9f-4082-b18f-fe89dc5d3d90
+                secrets:
+                  - get
+                  - list
+                  - set
+                  - delete
