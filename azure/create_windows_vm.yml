@@ -16,14 +16,14 @@
         address_prefix: "{{ subnet_cidr }}"
         virtual_network: "{{ vnet_name }}"
 
-    - name: Create Network Security Group that allows SSH and RDP
+    - name: Create Network Security Group that allows WinRM and RDP
       azure_rm_securitygroup:
         resource_group: "{{ resource_group_name }}"
         name: "{{ network_sec_group_name }}"
         rules:
-          - name: SSH
+          - name: WinRM
             protocol: Tcp
-            destination_port_range: 22
+            destination_port_range: 5985
             access: Allow
             priority: 1001
             direction: Inbound
