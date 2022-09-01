@@ -5,11 +5,7 @@
   - name: Test connection
     win_ping:
 
-  - name: Install python
-    win_chocolatey:
-      name: python
-
   - name: text to image
-    uri:
+    ansible.windows.win_uri:
       url: "https://api.ritekit.com/v2/image/quote?text=If you love life, don't waste time, for time is what life is made up of&author=Bruce%20Lee&textFont=Lora&textColor=%23000000&textFontWeight=400&authorFont=Lato&authorColor=%23e5e5e5&authorFontWeight=400&highlightColor=transparent&backgroundColor1=%238686bd&backgroundColor2=%231ddad6&logoUrl=https%3A%2F%2Fcdn.ritekit.com%2Fassets%2Fimg%2Fcommon%2Fmade-with-ritekit-white.png&width=400&height=400"
       method: GET
