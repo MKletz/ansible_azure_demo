@@ -1,0 +1,10 @@
+resource_group_name: "openenv-bf2nq" #update after install
+region: "eastus"
+vnet_cidr: "10.0.0.0/16"
+subnet_cidr: "10.0.1.0/24"
+vnet_name: "demo_vnet"
+subnet_name: "demo_subnet"
+network_sec_group_name: "demo_sec_group"
+vm_size: "Standard_DS1_v2"
+vm_sku: "2022-Datacenter"
+admin_user: "azureuser"

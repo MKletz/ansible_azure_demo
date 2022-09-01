@@ -4,6 +4,10 @@
   connection: local
   gather_facts: false
   tasks:
+    - name: Include vars from file
+      ansible.builtin.include_vars:
+        file: vars.yml
+
     - name: Generate dynamic names for resources
       set_fact:
         public_ip_name: "{{ vm_name.replace('-','_') }}_ip_name"
