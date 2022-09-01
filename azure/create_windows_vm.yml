@@ -8,7 +8,7 @@
   tasks:
     - name: Generate dynamic names for resources
       set_fact:
-        public_ip_name: "{{ vm_name.replace('-','_') }}_ip_name"
+        #public_ip_name: "{{ vm_name.replace('-','_') }}_ip_name"
         nic_name: "{{ vm_name.replace('-','_') }}_nic"
 
     - name: Create virtual network interface card
