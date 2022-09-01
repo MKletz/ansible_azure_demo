@@ -3,37 +3,6 @@
   hosts: localhost
   connection: local
   tasks:
-    - name: Create virtual network
-      azure_rm_virtualnetwork:
-        resource_group: "{{ resource_group_name }}"
-        name: "{{ vnet_name }}"
-        address_prefixes: "{{ vnet_cidr }}"
-
-    - name: Add subnet
-      azure_rm_subnet:
-        resource_group: "{{ resource_group_name }}"
-        name: "{{ subnet_name }}"
-        address_prefix: "{{ subnet_cidr }}"
-        virtual_network: "{{ vnet_name }}"
-
-    - name: Create Network Security Group that allows WinRM and RDP
-      azure_rm_securitygroup:
-        resource_group: "{{ resource_group_name }}"
-        name: "{{ network_sec_group_name }}"
-        rules:
-          - name: WinRM
-            protocol: Tcp
-            destination_port_range: 5985
-            access: Allow
-            priority: 1001
-            direction: Inbound
-          - name: RDP
-            protocol: Tcp
-            destination_port_range: 3389
-            access: Allow
-            priority: 1002
-            direction: Inbound
-
     - name: Generate dynamic names for resources
       set_fact:
         public_ip_name: "{{ vm_name.replace('-','_') }}_ip_name"
@@ -68,9 +37,9 @@
           purpose: demo
           os: windows
         winrm:
-          - protocol: http
-          #- source_vault: /subscriptions/ede7f891-835c-4128-af5b-0e53848e54e7/resourceGroups/openenv-bf2nq/providers/Microsoft.KeyVault/vaults/demo6754893265973824234
-          #- certificate_url: https://demo6754893265973824234.vault.azure.net/secrets/winrm/35dc3e8151ed495f87c4207709dac6ac
+          - protocol: https
+          - source_vault: /subscriptions/ede7f891-835c-4128-af5b-0e53848e54e7/resourceGroups/openenv-bf2nq/providers/Microsoft.KeyVault/vaults/demo6754893265973824234
+          - certificate_url: https://demo6754893265973824234.vault.azure.net/secrets/winrm/35dc3e8151ed495f87c4207709dac6ac
       register: vm_facts
 
     - name: Setting IP fact
