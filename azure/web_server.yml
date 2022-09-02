@@ -1,0 +1,28 @@
+---
+- hosts: os_windows
+  vars:
+    - site_source: "https://www.free-css.com/assets/files/free-css-templates/download/page281/koppee.zip"
+    - iis_root: C:\Inetpub\wwwroot
+    - site_dest: "{{ iis_root }}\\source.zip"
+
+  tasks:
+    - name: Install IIS
+      win_feature:
+        name: Web-Server
+        state: present
+
+    - name: Start IIS service
+      win_service:
+        name: W3Svc
+        state: started
+    
+    - name: Download site source
+      ansible.windows.win_get_url:
+        url: "{{ site_source }}"
+        dest: "{{ site_dest }}"
+
+    - name: Extract site content
+      community.windows.win_unzip:
+        src: "{{ site_dest }}"
+        dest: "{{ iis_root }}"
+        delete_archive: yes
