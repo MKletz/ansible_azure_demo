@@ -73,7 +73,7 @@ controller_inventories:
 controller_inventory_sources:
 - name: Azure Source
   organization: Default
-  source: Microsoft Azure Resource Manager
+  source: azure_rm
   inventory: Azure Inventory
   credential: Azure
   execution_environment: Ansible Engine 2.9 execution environment
