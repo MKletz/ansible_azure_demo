@@ -4,7 +4,7 @@ collections:
   - name: servicenow.itsm
   - name: ansible.windows
   - name: ansible.controller
-    version: 4.1.1
+    version: 4.2.0
   - name: redhat_cop.controller_configuration
-    version: 2.1.1
+    version: 2.2.0
   - name: azure.azcollection
