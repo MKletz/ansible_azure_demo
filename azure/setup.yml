@@ -5,9 +5,9 @@ user_message: |
 controller_components:
   - credential_types
   - credentials
-  - job_templates
   - inventories
   - inventory_sources
+  - job_templates
 
 controller_credential_types:
   - name: "SNOW Credential Type"
