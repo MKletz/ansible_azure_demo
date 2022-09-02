@@ -6,10 +6,12 @@ controller_components:
   - credential_types
   - credentials
   - job_templates
+  - inventory
+  - inventory_sources
 
 controller_credential_types:
   - name: "SNOW Credential Type"
-    description: "credential to store SNOW"
+    description: "Credential to store SNOW"
     kind: cloud
     inputs:
       fields:
@@ -50,7 +52,7 @@ controller_credentials:
   organization: Default
   credential_type: "Microsoft Azure Resource Manager"
   inputs:
-    Subscription_ID: "changeme"
+    subscription: "changeme"
 
 - name: Azure VM
   description: Credentials
@@ -60,10 +62,37 @@ controller_credentials:
     username: "{{ admin_user }}"
     password: "{{ admin_password }}"
 
+controller_inventories:
+- name: Azure Inventory
+  organization: Default
+  vars:
+    - ansible_connection: winrm
+    - ansible_winrm_transport: ntlm
+    - ansible_winrm_server_cert_validation: ignore
+
+controller_inventory_sources:
+- name: Azure Source
+  organization: Default
+  source: Microsoft Azure Resource Manager
+  inventory: Azure Inventory
+  credential: Azure
+  execution_environment: Ansible Engine 2.9 execution environment
+  overwrite: true
+  update_on_launch: true
+  source_vars:
+    hostnames: 
+      - tags.Name
+      - default
+    conditional_groups:
+      cloud_azure: true
+    keyed_groups:
+      - key: os_profile.system
+        prefix: os
+
 controller_templates:
 - name: "AZURE / Create Infra"
   job_type: run
-  inventory: "Workshop Inventory"
+  inventory: "Azure Inventory"
   project: "ansible_azure_demo"
   playbook: "azure/create_azure_env.yml"
   execution_environment: "Ansible Engine 2.9 execution environment"
@@ -73,7 +102,7 @@ controller_templates:
 
 - name: "AZURE / Create Windows VM"
   job_type: run
-  inventory: "Workshop Inventory"
+  inventory: "Azure Inventory"
   project: "ansible_azure_demo"
   playbook: "azure/create_windows_vm.yml"
   execution_environment: "Ansible Engine 2.9 execution environment"
@@ -91,4 +120,32 @@ controller_templates:
       - question_name: Requested for?
         type: text
         variable: requested_for
+        required: false
+
+- name: "WINDOWS / Security Settings"
+  job_type: run
+  inventory: "Azure Inventory"
+  project: "ansible_azure_demo"
+  playbook: "azure/security_settings.yml"
+  execution_environment: "Default execution environment"
+  credentials:
+    - "Azure VM"
+  survey_enabled: false
+
+- name: "WINDOWS / Web Server"
+  job_type: run
+  inventory: "Azure Inventory"
+  project: "ansible_azure_demo"
+  playbook: "azure/web_server.yml"
+  execution_environment: "Default execution environment"
+  credentials:
+    - "Azure VM"
+  survey_enabled: true
+  survey:
+    name: ''
+    description: ''
+    spec:
+      - question_name: Site Source
+        type: text
+        variable: survey_site_source
         required: true
