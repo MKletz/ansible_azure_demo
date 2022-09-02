@@ -8,7 +8,7 @@ controller_components:
   - inventories
   - inventory_sources
   - job_templates
-  - controller_workflows
+  - workflows
 
 controller_credential_types:
   - name: "SNOW Credential Type"
