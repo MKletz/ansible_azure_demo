@@ -17,12 +17,12 @@
         state: started
     
     - name: Download site source
-      ansible.windows.win_get_url:
+      win_get_url:
         url: "{{ site_source }}"
         dest: "{{ site_dest }}"
 
     - name: Extract site content
-      community.windows.win_unzip:
+      win_unzip:
         src: "{{ site_dest }}"
         dest: "{{ iis_root }}"
         delete_archive: yes
