@@ -1,7 +1,7 @@
 ---
 - hosts: os_windows
   vars:
-    - site_source: "https://www.free-css.com/assets/files/free-css-templates/download/page281/koppee.zip"
+    - site_source: "{{ survey_site_source | default('https://www.free-css.com/assets/files/free-css-templates/download/page281/koppee.zip') }}"
     - iis_root: C:\Inetpub\wwwroot
     - site_dest: "{{ iis_root }}\\source.zip"
 
