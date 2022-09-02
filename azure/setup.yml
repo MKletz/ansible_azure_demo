@@ -8,6 +8,7 @@ controller_components:
   - inventories
   - inventory_sources
   - job_templates
+  - controller_workflows
 
 controller_credential_types:
   - name: "SNOW Credential Type"
@@ -149,3 +150,52 @@ controller_templates:
         type: text
         variable: survey_site_source
         required: true
+
+controller_workflows:
+  - name: AZURE / Deploy New Web Server
+    description: Deploys a new web server in Azure with the provided content
+    extra_vars: {}
+    survey_enabled: true
+    survey:
+      name: ''
+      description: ''
+      spec:
+        - question_name: Site Source
+          type: text
+          variable: survey_site_source
+          required: true
+    allow_simultaneous: false
+    ask_variables_on_launch: false
+    inventory:
+    state: present
+    limit:
+    labels:
+    scm_branch:
+    ask_inventory_on_launch: false
+    ask_scm_branch_on_launch: false
+    ask_limit_on_launch: false
+    organization: Default
+    schedules: []
+    simplified_workflow_nodes:
+      - all_parents_must_converge: false
+        identifier: node101
+        unified_job_template: "AZURE / Create Infra"
+        success_nodes:
+          - node201
+      - all_parents_must_converge: false
+        identifier: node201
+        unified_job_template: "AZURE / Create Windows VM"
+        success_nodes:
+          - node301
+          - node302
+      - all_parents_must_converge: false
+        identifier: node301
+        unified_job_template: "WINDOWS / Security Settings"
+      - all_parents_must_converge: false
+        identifier: node302
+        unified_job_template: "WINDOWS / Web Server"
+    notification_templates_started: []
+    notification_templates_success: []
+    notification_templates_error: []
+    notification_templates_approvals: []
+    survey_spec: {}
