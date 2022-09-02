@@ -174,21 +174,21 @@ controller_workflows:
     schedules: []
     simplified_workflow_nodes:
       - all_parents_must_converge: false
-        identifier: node101
+        identifier: Verify Azure Environment
         unified_job_template: "AZURE / Create Infra"
         success_nodes:
-          - node201
+          - Provision Windows VM
       - all_parents_must_converge: false
-        identifier: node201
+        identifier: Provision Windows VM
         unified_job_template: "AZURE / Create Windows VM"
         success_nodes:
-          - node301
-          - node302
+          - Harden VM
+          - Configure Web Server
       - all_parents_must_converge: false
-        identifier: node301
+        identifier: Harden VM
         unified_job_template: "WINDOWS / Security Settings"
       - all_parents_must_converge: false
-        identifier: node302
+        identifier: Configure Web Server
         unified_job_template: "WINDOWS / Web Server"
     notification_templates_started: []
     notification_templates_success: []
