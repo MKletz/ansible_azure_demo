@@ -6,7 +6,7 @@ controller_components:
   - credential_types
   - credentials
   - job_templates
-  - inventory
+  - inventories
   - inventory_sources
 
 controller_credential_types:
@@ -65,10 +65,10 @@ controller_credentials:
 controller_inventories:
 - name: Azure Inventory
   organization: Default
-  vars:
-    - ansible_connection: winrm
-    - ansible_winrm_transport: ntlm
-    - ansible_winrm_server_cert_validation: ignore
+  variables:
+    ansible_connection: winrm
+    ansible_winrm_transport: ntlm
+    ansible_winrm_server_cert_validation: ignore
 
 controller_inventory_sources:
 - name: Azure Source
