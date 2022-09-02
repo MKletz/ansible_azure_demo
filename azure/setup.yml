@@ -166,11 +166,7 @@ controller_workflows:
           required: true
     allow_simultaneous: false
     ask_variables_on_launch: false
-    inventory:
     state: present
-    limit:
-    labels:
-    scm_branch:
     ask_inventory_on_launch: false
     ask_scm_branch_on_launch: false
     ask_limit_on_launch: false
