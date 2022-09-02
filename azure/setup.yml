@@ -152,7 +152,7 @@ controller_templates:
         required: true
 
 controller_workflows:
-  - name: AZURE / Deploy New Web Server
+  - name: AZURE WORKFLOW / Deploy New Web Server
     description: Deploys a new web server in Azure with the provided content
     extra_vars: {}
     survey_enabled: true
