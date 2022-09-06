@@ -1,5 +1,5 @@
 ---
-- name: Password Settings
+- name: Security Settings
   hosts: os_windows
   vars:
     LegalNoticeCaption: undef

@@ -151,6 +151,15 @@ controller_templates:
         variable: survey_site_source
         required: true
 
+- name: "API / Cat Fact"
+  job_type: run
+  inventory: "Azure Inventory"
+  project: "ansible_azure_demo"
+  playbook: "azure/cat_fact.yml"
+  execution_environment: "Default execution environment"
+  credentials:
+  survey_enabled: false
+
 controller_workflows:
   - name: AZURE WORKFLOW / Deploy New Web Server
     description: Deploys a new web server in Azure with the provided content
@@ -182,8 +191,13 @@ controller_workflows:
         identifier: Provision Windows VM
         unified_job_template: "AZURE / Create Windows VM"
         success_nodes:
-          - Harden VM
+          - REST API Call
           - Configure Web Server
+      - all_parents_must_converge: false
+        identifier: REST API Call
+        unified_job_template: "API / Cat Fact"
+        success_nodes:
+          - Harden VM
       - all_parents_must_converge: false
         identifier: Harden VM
         unified_job_template: "WINDOWS / Security Settings"
