@@ -9,9 +9,10 @@
     register: cat_fact
   
   - name: Set fact vars
-    set_fact:
-      LegalNoticeCaption: "Cat Fact of The Day"
-      LegalNoticeText: "{{ cat_fact.json.fact }}"
+    set_stats:
+      data:
+        LegalNoticeCaption: "Cat Fact of The Day"
+        LegalNoticeText: "{{ cat_fact.json.fact }}"
 
   - name: Print cat_fact
     debug:
