@@ -1,6 +1,6 @@
 ---
 user_message: |
-  You will need to update SNOW credentials with your SNOW instance details if you plan to demo this.
+  You will need to update the SNOW and Azure credentials. create_sp.ps1 can be used in the Azure shell for generating credentials.
 
 controller_components:
   - credential_types
