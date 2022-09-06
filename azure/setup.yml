@@ -158,7 +158,6 @@ controller_templates:
   project: "ansible_azure_demo"
   playbook: "azure/cat_fact.yml"
   execution_environment: "Default execution environment"
-  credentials:
   survey_enabled: false
 
 controller_workflows:
