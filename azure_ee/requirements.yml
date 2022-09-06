@@ -1,8 +1,0 @@
-collections:
-  - name: community.general
-  - name: community.windows
-  - name: servicenow.itsm
-  - name: ansible.windows
-  - name: ansible.controller
-  - name: redhat_cop.controller_configuration
-  - name: azure.azcollection
