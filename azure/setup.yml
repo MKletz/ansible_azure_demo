@@ -154,7 +154,7 @@ controller_templates:
 
 - name: "API / Cat Fact"
   job_type: run
-  inventory: "Azure Inventory"
+  inventory: "Workshop Inventory"
   project: "ansible_azure_demo"
   playbook: "azure/cat_fact.yml"
   execution_environment: "Default execution environment"
