@@ -1,7 +1,9 @@
 ---
 - name: Password Settings
   hosts: os_windows
-
+  vars:
+    LegalNoticeCaption: undef
+    LegalNoticeText: undef
   tasks:
   - name: Update PowerShellGet
     win_shell: | 
@@ -43,3 +45,19 @@
       resource_name: AccountPolicy
       Name: Password_must_meet_complexity_requirements
       Password_must_meet_complexity_requirements: Enabled
+
+  - name: Change legal notice caption
+    ansible.windows.win_regedit:
+      path: HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+      name: LegalNoticeCaption
+      data: "{{ LegalNoticeCaption }}"
+      type: string
+      state: present
+
+  - name: Change legal notice text
+    ansible.windows.win_regedit:
+      path: HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+      name: LegalNoticeText
+      data: "{{ LegalNoticeText }}"
+      type: string
+      state: present

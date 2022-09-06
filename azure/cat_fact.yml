@@ -8,6 +8,11 @@
       url: https://catfact.ninja/fact
     register: cat_fact
   
+  - name: Set fact vars
+    set_fact:
+      LegalNoticeCaption: "Cat Fact of The Day"
+      LegalNoticeText: "{{ cat_fact.json.fact }}"
+
   - name: Print cat_fact
     debug:
-      msg: "{{ cat_fact.json.fact }}"
+      var: LegalNoticeText
