@@ -109,6 +109,7 @@ controller_templates:
   execution_environment: "Ansible Engine 2.9 execution environment"
   credentials:
     - "Azure"
+    - "SNOW Credential"
   survey_enabled: true
   survey:
     name: ''
@@ -173,6 +174,10 @@ controller_workflows:
           type: text
           variable: survey_site_source
           required: true
+        - question_name: Requested for?
+          type: text
+          variable: requested_for
+          required: false
     allow_simultaneous: false
     ask_variables_on_launch: false
     state: present
