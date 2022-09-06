@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  gather_facts: false
+  tasks:
+  - name: Get cat fact
+    ansible.builtin.uri:
+      url: https://catfact.ninja/fact
+    register: cat_fact
+  
+  - name: Print cat_fact
+    debug:
+      var: cat_fact
