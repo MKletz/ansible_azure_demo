@@ -16,4 +16,4 @@
 
   - name: Print cat_fact
     debug:
-      var: LegalNoticeText
+      msg: "{{ cat_fact.json.fact }}"
