@@ -73,14 +73,15 @@
       servicenow.itsm.configuration_item:
         name: "{{ vm_name }}"
         short_description: "Windows Server Azure VM at {{ public_ip }}"
-        os: Windows
-        os_version: "{{ vm_sku }}"
+        ip_address: "{{ public_ip }}"
         sys_class_name: cmdb_ci_server
         assigned_to: "{{ requested_for }}"
         environment: production
         category: Hardware
         other:
           model_number: "{{ vm_sku }}"
+          os: Windows
+          os_version: "{{ vm_sku }}"
         instance:
           host: "{{ SN_HOST }}"
           grant_type: "password"
