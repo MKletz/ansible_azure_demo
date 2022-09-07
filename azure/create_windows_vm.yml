@@ -4,7 +4,7 @@
   connection: local
   gather_facts: false
   vars:
-    - generated_name: "{{ lookup('community.general.random_string', min_lower=1, min_upper=1, min_numeric=1) }}"
+    - generated_name: "{{ lookup('community.general.random_string', length=10, special=no, min_lower=1, min_upper=1, min_numeric=1) }}"
     - vm_name: "{{ survery_vm_name | default( generated_name ) }}"
   vars_files:
     - azure_vars.yml
