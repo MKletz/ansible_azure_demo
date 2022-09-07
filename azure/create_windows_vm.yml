@@ -39,7 +39,7 @@
           purpose: demo
           os: windows
       register: vm_facts
-      no_log: true
+      #no_log: true
 
     - name: Create VM script extension to enable HTTPS WinRM listener
       azure_rm_virtualmachineextension:
