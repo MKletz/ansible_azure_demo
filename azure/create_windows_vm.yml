@@ -86,4 +86,4 @@
           grant_type: "password"
           username: "{{ SN_USERNAME }}"
           password: "{{ SN_PASSWORD }}"
-      when: SN_USERNAME is defined
+      when: SN_USERNAME is defined and requested_for is defined
