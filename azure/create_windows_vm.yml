@@ -73,6 +73,7 @@
       servicenow.itsm.configuration_item:
         name: "{{ vm_name }}"
         short_description: "Windows Server Azure VM at {{ public_ip }}"
+        operating_system: Windows
         sys_class_name: cmdb_ci_server
         assigned_to: "{{ requested_for }}"
         environment: production
