@@ -82,7 +82,7 @@
           model_number: "{{ vm_sku }}"
           os: Windows
           os_version: "{{ vm_sku }}"
-          disk_space: "{{ vm_facts.ansible_facts.azure_vm.properties.osDisk.diskSizeGB }}"
+          disk_space: "{{ vm_facts.ansible_facts.azure_vm.properties.storageProfile.osDisk.diskSizeGB }}"
         instance:
           host: "{{ SN_HOST }}"
           grant_type: "password"
