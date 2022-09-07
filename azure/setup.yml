@@ -117,8 +117,8 @@ controller_templates:
     spec:
       - question_name: VM name
         type: text
-        variable: vm_name
-        required: true
+        variable: survery_vm_name
+        required: false
       - question_name: Requested for?
         type: text
         variable: requested_for

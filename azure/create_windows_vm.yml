@@ -3,6 +3,8 @@
   hosts: localhost
   connection: local
   gather_facts: false
+  vars:
+    - vm_name: "{{ {{ survery_vm_name }} | default({{ lookup('community.general.random_string', min_lower=1, min_upper=1, min_numeric=1) }}) }}"
   vars_files:
     - azure_vars.yml
   tasks:
