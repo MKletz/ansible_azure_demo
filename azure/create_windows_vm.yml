@@ -42,7 +42,7 @@
       no_log: true
 
     - name: Wait for Virtual Machine to be ready
-      azure_rm_resource_facts:
+      azure_rm_resource_info:
         resource_group: "{{ resource_group_name }}"
         provider: Compute
         resource_type: virtualMachines
