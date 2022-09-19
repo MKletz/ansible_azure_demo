@@ -11,6 +11,21 @@
       public_ip_name: "{{ vm_name.replace('-','_') }}_ip_name"
       nic_name: "{{ vm_name.replace('-','_') }}_nic"
 
+  - name: Create incident
+    servicenow.itsm.incident:
+      instance:
+        host: "{{ SN_HOST }}"
+        grant_type: "password"
+        username: "{{ SN_USERNAME }}"
+        password: "{{ SN_PASSWORD }}"
+      state: new
+      caller: "{{ SN_USERNAME }}"
+      short_description: "Catalog service requested"
+      description: "{{ requested_for }} has requested a web server"
+      impact: low
+      urgency: low
+    register: snow_incident
+
   - name: Create virtual network interface card
     azure_rm_networkinterface:
       resource_group: "{{ resource_group_name }}"
