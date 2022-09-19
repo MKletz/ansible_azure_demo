@@ -119,6 +119,7 @@ controller_templates:
         type: text
         variable: survery_vm_name
         required: false
+        default: demo123
       - question_name: Requested for?
         type: text
         variable: requested_for
