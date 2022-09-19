@@ -41,10 +41,16 @@
     register: vm_facts
     no_log: true
 
-  - name: Pause for 2 minutes
-    ansible.builtin.pause:
-      minutes: 2
-    when: Create_VM.changed
+  - name: Wait for Virtual Machine to be ready
+    azure_rm_resource_info:
+      resource_group: "{{ resource_group_name }}"
+      provider: Compute
+      resource_type: virtualMachines
+      resource_name: "{{ vm_name }}"
+    register: output
+    until: output.response[0].properties.osProfile.allowExtensionOperations
+    delay: 60
+    retries: 5
 
   - name: Create VM script extension to enable HTTPS WinRM listener
     azure_rm_virtualmachineextension:
