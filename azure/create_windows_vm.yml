@@ -6,97 +6,97 @@
   vars_files:
     - azure_vars.yml
   tasks:
-    - name: Generate dynamic names for resources
-      set_fact:
-        public_ip_name: "{{ vm_name.replace('-','_') }}_ip_name"
-        nic_name: "{{ vm_name.replace('-','_') }}_nic"
+  - name: Generate dynamic names for resources
+    set_fact:
+      public_ip_name: "{{ vm_name.replace('-','_') }}_ip_name"
+      nic_name: "{{ vm_name.replace('-','_') }}_nic"
 
-    - name: Create virtual network interface card
-      azure_rm_networkinterface:
-        resource_group: "{{ resource_group_name }}"
-        name: "{{ nic_name }}"
-        virtual_network: "{{ vnet_name }}"
-        subnet: "{{ subnet_name }}"
-        public_ip_name: "{{ public_ip_name }}"
-        security_group: "{{ network_sec_group_name }}"
+  - name: Create virtual network interface card
+    azure_rm_networkinterface:
+      resource_group: "{{ resource_group_name }}"
+      name: "{{ nic_name }}"
+      virtual_network: "{{ vnet_name }}"
+      subnet: "{{ subnet_name }}"
+      public_ip_name: "{{ public_ip_name }}"
+      security_group: "{{ network_sec_group_name }}"
 
-    - name: Create VM
-      azure_rm_virtualmachine:
-        resource_group: "{{ resource_group_name }}"
-        name: "{{ vm_name }}"
-        os_type: Windows
-        vm_size: "{{ vm_size }}"
-        admin_username: "{{ admin_user }}"
-        admin_password: "{{ admin_password }}"
-        network_interfaces: "{{ nic_name }}"
-        image:
-          offer: WindowsServer
-          publisher: MicrosoftWindowsServer
-          sku: "{{ vm_sku }}"
-          version: latest
-        tags:
-          deployment: ansible
-          purpose: demo
-          os: windows
-      register: vm_facts
-      no_log: true
+  - name: Create VM
+    azure_rm_virtualmachine:
+      resource_group: "{{ resource_group_name }}"
+      name: "{{ vm_name }}"
+      os_type: Windows
+      vm_size: "{{ vm_size }}"
+      admin_username: "{{ admin_user }}"
+      admin_password: "{{ admin_password }}"
+      network_interfaces: "{{ nic_name }}"
+      image:
+        offer: WindowsServer
+        publisher: MicrosoftWindowsServer
+        sku: "{{ vm_sku }}"
+        version: latest
+      tags:
+        deployment: ansible
+        purpose: demo
+        os: windows
+    register: vm_facts
+    no_log: true
 
-    - name: Wait for Virtual Machine to be ready
-      azure_rm_resource_info:
-        resource_group: "{{ resource_group_name }}"
-        provider: Compute
-        resource_type: virtualMachines
-        resource_name: "{{ vm_name }}"
-      register: output
-      until: output.response[0].properties.provisioningState == 'Succeeded'
-      delay: 60
-      retries: 5
+  - name: Wait for Virtual Machine to be ready
+    azure_rm_resource_info:
+      resource_group: "{{ resource_group_name }}"
+      provider: Compute
+      resource_type: virtualMachines
+      resource_name: "{{ vm_name }}"
+    register: output
+    until: output.response[0].properties.provisioningState == 'Succeeded'
+    delay: 60
+    retries: 5
 
-    - name: Create VM script extension to enable HTTPS WinRM listener
-      azure_rm_virtualmachineextension:
-        name: winrm-extension
-        resource_group: "{{ resource_group_name }}"
-        virtual_machine_name: "{{ vm_name }}"
-        publisher: Microsoft.Compute
-        virtual_machine_extension_type: CustomScriptExtension
-        type_handler_version: '1.9'
-        settings: '{"fileUris": ["https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1"],"commandToExecute": "powershell -ExecutionPolicy Unrestricted -File ConfigureRemotingForAnsible.ps1"}'
-        auto_upgrade_minor_version: true
+  - name: Create VM script extension to enable HTTPS WinRM listener
+    azure_rm_virtualmachineextension:
+      name: winrm-extension
+      resource_group: "{{ resource_group_name }}"
+      virtual_machine_name: "{{ vm_name }}"
+      publisher: Microsoft.Compute
+      virtual_machine_extension_type: CustomScriptExtension
+      type_handler_version: '1.9'
+      settings: '{"fileUris": ["https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1"],"commandToExecute": "powershell -ExecutionPolicy Unrestricted -File ConfigureRemotingForAnsible.ps1"}'
+      auto_upgrade_minor_version: true
 
-    - name: Get public IP
-      set_fact:
-        public_ip: "{{ vm_facts.ansible_facts.azure_vm.properties.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.publicIPAddress.properties.ipAddress }}"
+  - name: Get public IP
+    set_fact:
+      public_ip: "{{ vm_facts.ansible_facts.azure_vm.properties.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.publicIPAddress.properties.ipAddress }}"
 
-    - name: wait for the WinRM port to come online
-      wait_for:
-        port: 5986
-        host: "{{ public_ip }}"
-        timeout: 600
+  - name: wait for the WinRM port to come online
+    wait_for:
+      port: 5986
+      host: "{{ public_ip }}"
+      timeout: 600
 
-    - name: VM access information
-      debug:
-        msg: 
-          - "Username: {{ admin_user }}"
-          - "Password: {{ admin_password }}"
-          - "Public IP: {{ public_ip }}"
+  - name: VM access information
+    debug:
+      msg: 
+        - "Username: {{ admin_user }}"
+        - "Password: {{ admin_password }}"
+        - "Public IP: {{ public_ip }}"
 
-    - name: Create a configuration item
-      servicenow.itsm.configuration_item:
-        name: "{{ vm_name }}"
-        short_description: "Azure VM deployed via Ansible job {{ awx_job_id }}"
-        ip_address: "{{ public_ip }}"
-        sys_class_name: cmdb_ci_server
-        assigned_to: "{{ requested_for }}"
-        environment: production
-        category: Hardware
-        other:
-          model_number: "{{ vm_sku }}"
-          os: Windows
-          os_version: "{{ vm_sku }}"
-          disk_space: "{{ vm_facts.ansible_facts.azure_vm.properties.storageProfile.osDisk.diskSizeGB }}"
-        instance:
-          host: "{{ SN_HOST }}"
-          grant_type: "password"
-          username: "{{ SN_USERNAME }}"
-          password: "{{ SN_PASSWORD }}"
-      when: SN_USERNAME is defined and requested_for is defined
+  - name: Create a configuration item
+    servicenow.itsm.configuration_item:
+      name: "{{ vm_name }}"
+      short_description: "Azure VM deployed via Ansible job {{ awx_job_id }}"
+      ip_address: "{{ public_ip }}"
+      sys_class_name: cmdb_ci_server
+      assigned_to: "{{ requested_for }}"
+      environment: production
+      category: Hardware
+      other:
+        model_number: "{{ vm_sku }}"
+        os: Windows
+        os_version: "{{ vm_sku }}"
+        disk_space: "{{ vm_facts.ansible_facts.azure_vm.properties.storageProfile.osDisk.diskSizeGB }}"
+      instance:
+        host: "{{ SN_HOST }}"
+        grant_type: "password"
+        username: "{{ SN_USERNAME }}"
+        password: "{{ SN_PASSWORD }}"
+    when: SN_USERNAME is defined and requested_for is defined

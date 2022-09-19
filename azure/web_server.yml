@@ -6,39 +6,39 @@
     - site_dest: "{{ iis_root }}\\source.zip"
 
   tasks:
-    - name: Install IIS
-      win_feature:
-        name: Web-Server
-        state: present
+  - name: Install IIS
+    win_feature:
+      name: Web-Server
+      state: present
 
-    - name: Start IIS service
-      win_service:
-        name: W3Svc
-        state: started
+  - name: Start IIS service
+    win_service:
+      name: W3Svc
+      state: started
 
-    - name: Remove default IIS files
-      win_file:
-        path: "{{ iis_root }}\\{{ item }}"
-        state: absent
-      loop:
-        - "iisstart.htm"
-        - "iisstart.png"
+  - name: Remove default IIS files
+    win_file:
+      path: "{{ iis_root }}\\{{ item }}"
+      state: absent
+    loop:
+      - "iisstart.htm"
+      - "iisstart.png"
 
-    - name: Download site source
-      win_get_url:
-        url: "{{ site_source }}"
-        dest: "{{ site_dest }}"
+  - name: Download site source
+    win_get_url:
+      url: "{{ site_source }}"
+      dest: "{{ site_dest }}"
 
-    - name: Extract site content
-      win_unzip:
-        src: "{{ site_dest }}"
-        dest: "{{ iis_root }}"
-        delete_archive: yes
+  - name: Extract site content
+    win_unzip:
+      src: "{{ site_dest }}"
+      dest: "{{ iis_root }}"
+      delete_archive: yes
 
-    - name: Get site dir
-      win_shell: "(Get-ChildItem -Path {{ iis_root }}).Name"
-      register: site_sub_dir
+  - name: Get site dir
+    win_shell: "(Get-ChildItem -Path {{ iis_root }}).Name"
+    register: site_sub_dir
 
-    - name: Output URL
-      debug:
-        msg: "http://{{ ansible_host }}/{{ site_sub_dir.stdout_lines[0] }}"
+  - name: Output URL
+    debug:
+      msg: "http://{{ ansible_host }}/{{ site_sub_dir.stdout_lines[0] }}"

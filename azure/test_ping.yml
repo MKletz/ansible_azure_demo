@@ -1,6 +1,0 @@
----
-- hosts: os_windows
-  tasks:
-
-  - name: Test connection
-    win_ping:
