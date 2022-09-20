@@ -64,8 +64,8 @@
 
   - name: Create a change task
     servicenow.itsm.change_request_task:
-      configuration_item: snow_configuration_item
-      change_request_number: snow_change_request
+      configuration_item: "{{ snow_configuration_item }}"
+      change_request_number: "{{ snow_change_request }}"
       assigned_to: "{{ SN_USERNAME }}"
       state: closed
       close_code: "successful"
