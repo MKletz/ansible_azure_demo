@@ -118,7 +118,7 @@
       assigned_to: "{{ SN_USERNAME }}"
       state: closed
       close_code: "successful"
-      close_notes: "Closed"
+      close_notes: "See linked configuration item"
       short_description: Deploy VM
       description: Provision Windows VM in Azure
       instance:
