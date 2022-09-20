@@ -113,8 +113,8 @@
 
   - name: Create a change task
     servicenow.itsm.change_request_task:
-      configuration_item: snow_configuration_item.record.name
-      change_request_number: snow_change_request.record.number
+      configuration_item: "{{ snow_configuration_item.record.name }}"
+      change_request_number: "{{ snow_change_request.record.number }}"
       assigned_to: "{{ SN_USERNAME }}"
       state: closed
       short_description: Deploy VM
