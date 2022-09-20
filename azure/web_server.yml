@@ -35,6 +35,22 @@
       dest: "{{ iis_root }}"
       delete_archive: yes
 
+  - name: Create a change task
+    servicenow.itsm.change_request_task:
+      configuration_item: "{{ snow_configuration_item.record.name }}"
+      change_request_number: "{{ snow_change_request.record.number }}"
+      assigned_to: "{{ SN_USERNAME }}"
+      state: closed
+      close_code: "successful"
+      close_notes: "Configured IIS and deployed the content from {{ survey_site_source }}"
+      short_description: Configure web server
+      description: Configure IIS and deploy content
+      instance:
+        host: "{{ SN_HOST }}"
+        grant_type: "password"
+        username: "{{ SN_USERNAME }}"
+        password: "{{ SN_PASSWORD }}"
+
   - name: Get site dir
     win_shell: "(Get-ChildItem -Path {{ iis_root }}).Name"
     register: site_sub_dir

@@ -61,3 +61,19 @@
       data: "{{ LegalNoticeText }}"
       type: string
       state: present
+
+  - name: Create a change task
+    servicenow.itsm.change_request_task:
+      configuration_item: "{{ snow_configuration_item.record.name }}"
+      change_request_number: "{{ snow_change_request.record.number }}"
+      assigned_to: "{{ SN_USERNAME }}"
+      state: closed
+      close_code: "successful"
+      close_notes: "Applied company standard password policy"
+      short_description: Apply security settings to web server
+      description: Configure password policy
+      instance:
+        host: "{{ SN_HOST }}"
+        grant_type: "password"
+        username: "{{ SN_USERNAME }}"
+        password: "{{ SN_PASSWORD }}"
