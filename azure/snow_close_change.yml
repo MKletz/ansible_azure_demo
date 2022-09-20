@@ -11,14 +11,8 @@
         grant_type: "password"
         username: "{{ SN_USERNAME }}"
         password: "{{ SN_PASSWORD }}"
-
       state: closed
       close_code: "successful"
       close_notes: "Closed"
       assignment_group: Servers
       number: "{{ snow_change_request }}"
-
-  - name: Set stats
-    set_stats:
-      data:
-        snow_change_request: "{{ snow_configuration_item.record.name }}"
