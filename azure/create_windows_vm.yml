@@ -130,5 +130,5 @@
   - name: Set fact vars
     set_stats:
       data:
-        snow_change_request: snow_change_request
-        snow_configuration_item: snow_configuration_item
+        snow_change_request: "{{ snow_configuration_item.record.name }}"
+        snow_configuration_item: "{{ snow_change_request.record.number }}"
