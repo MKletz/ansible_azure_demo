@@ -119,6 +119,11 @@
       state: closed
       short_description: Deploy VM
       description: Provision Windows VM in Azure
+      instance:
+        host: "{{ SN_HOST }}"
+        grant_type: "password"
+        username: "{{ SN_USERNAME }}"
+        password: "{{ SN_PASSWORD }}"
 
   - name: Set fact vars
     set_stats:
