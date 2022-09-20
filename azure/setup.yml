@@ -136,6 +136,7 @@ controller_templates:
   execution_environment: "Default execution environment"
   credentials:
     - "Azure VM"
+    - "SNOW Credential"
   survey_enabled: false
 
 - name: "WINDOWS / Web Server"
@@ -146,6 +147,7 @@ controller_templates:
   execution_environment: "Default execution environment"
   credentials:
     - "Azure VM"
+    - "SNOW Credential"
   survey_enabled: true
   survey:
     name: ''
@@ -164,73 +166,16 @@ controller_templates:
   execution_environment: "Default execution environment"
   survey_enabled: false
 
-- name: "SNOW / Create Change Request"
+- name: "SNOW / Close Change Request"
   job_type: run
   inventory: "Azure Inventory"
   project: "ansible_azure_demo"
-  playbook: "azure/snow_create_change.yml"
+  playbook: "azure/snow_close_change.yml"
   execution_environment: "Default execution environment"
   credentials:
+    - "Azure VM"
     - "SNOW Credential"
-  survey_enabled: true
-  survey:
-    name: ''
-    description: ''
-    spec:
-      - question_name: Type
-        type: multiplechoice
-        variable: survey_type
-        required: false
-        default: standard
-        choices:
-          - standard
-          - normal
-          - emergency
-      - question_name: State
-        type: text
-        variable: survey_state
-        required: false
-        default: new
-      - question_name: Requested By
-        type: text
-        variable: survey_requested_by
-        required: true
-      - question_name: Short Description
-        type: text
-        variable: survey_short_description
-        required: true
-      - question_name: Description
-        type: text
-        variable: survey_description
-        required: true
-      - question_name: Priority
-        type: multiplechoice
-        variable: survey_priority
-        required: false
-        default: low
-        choices:
-          - low
-          - moderate
-          - high
-          - critical
-      - question_name: Risk
-        type: multiplechoice
-        variable: survey_risk
-        required: false
-        default: low
-        choices:
-          - low
-          - moderate
-          - high
-      - question_name: Impact
-        type: multiplechoice
-        variable: survey_impact
-        required: false
-        default: low
-        choices:
-          - low
-          - medium
-          - high
+  survey_enabled: false
 
 controller_workflows:
   - name: AZURE WORKFLOW / Deploy New Web Server
