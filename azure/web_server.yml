@@ -50,6 +50,7 @@
         grant_type: "password"
         username: "{{ SN_USERNAME }}"
         password: "{{ SN_PASSWORD }}"
+    delegate_to: localhost
 
   - name: Get site dir
     win_shell: "(Get-ChildItem -Path {{ iis_root }}).Name"

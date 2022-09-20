@@ -77,3 +77,4 @@
         grant_type: "password"
         username: "{{ SN_USERNAME }}"
         password: "{{ SN_PASSWORD }}"
+    delegate_to: localhost

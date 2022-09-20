@@ -13,7 +13,6 @@
         password: "{{ SN_PASSWORD }}"
       type: "{{ survey_type }}"
       state: "{{ survey_state }}"
-      #assignment_group: "{{ survey_assignment_group }}"
       requested_by: "{{ survey_requested_by }}"
       short_description: "{{ survey_short_description }}"
       description: "{{ survey_description }}"
