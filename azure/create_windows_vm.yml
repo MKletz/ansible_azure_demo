@@ -117,6 +117,8 @@
       change_request_number: "{{ snow_change_request.record.number }}"
       assigned_to: "{{ SN_USERNAME }}"
       state: closed
+      close_code: "successful"
+      close_notes: "Closed"
       short_description: Deploy VM
       description: Provision Windows VM in Azure
       instance:
