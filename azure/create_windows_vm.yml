@@ -11,20 +11,22 @@
       public_ip_name: "{{ vm_name.replace('-','_') }}_ip_name"
       nic_name: "{{ vm_name.replace('-','_') }}_nic"
 
-  - name: Create incident
-    servicenow.itsm.incident:
+  - name: Create change request
+    servicenow.itsm.change_request:
       instance:
         host: "{{ SN_HOST }}"
         grant_type: "password"
         username: "{{ SN_USERNAME }}"
         password: "{{ SN_PASSWORD }}"
+      type: standard
       state: new
-      caller: "{{ SN_USERNAME }}"
-      short_description: "Catalog service requested"
-      description: "{{ requested_for }} has requested a web server"
+      requested_by: "{{ requested_for }}"
+      short_description: Deploy new web server
+      description: "Deploy new web server with content from {{ survey_site_source }}"
+      priority: low
+      risk: low
       impact: low
-      urgency: low
-    register: snow_incident
+    register: snow_change_request
 
   - name: Create virtual network interface card
     azure_rm_networkinterface:
@@ -88,13 +90,6 @@
       host: "{{ public_ip }}"
       timeout: 600
 
-  - name: VM access information
-    debug:
-      msg: 
-        - "Username: {{ admin_user }}"
-        - "Password: {{ admin_password }}"
-        - "Public IP: {{ public_ip }}"
-
   - name: Create a configuration item
     servicenow.itsm.configuration_item:
       name: "{{ vm_name }}"
@@ -114,4 +109,10 @@
         grant_type: "password"
         username: "{{ SN_USERNAME }}"
         password: "{{ SN_PASSWORD }}"
-    when: SN_USERNAME is defined and requested_for is defined
+    register: snow_configuration_item
+
+  - name: Set fact vars
+    set_stats:
+      data:
+        snow_change_request: snow_change_request
+        snow_configuration_item: snow_configuration_item
