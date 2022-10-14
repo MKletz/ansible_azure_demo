@@ -166,17 +166,6 @@ controller_templates:
   execution_environment: "Default execution environment"
   survey_enabled: false
 
-- name: "SNOW / Close Change Request"
-  job_type: run
-  inventory: "Azure Inventory"
-  project: "ansible_azure_demo"
-  playbook: "azure/snow_close_change.yml"
-  execution_environment: "Default execution environment"
-  credentials:
-    - "Azure VM"
-    - "SNOW Credential"
-  survey_enabled: false
-
 controller_workflows:
   - name: AZURE WORKFLOW / Deploy New Web Server
     description: Deploys a new web server in Azure with the provided content
