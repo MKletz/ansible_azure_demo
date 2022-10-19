@@ -15,9 +15,19 @@
   - name: Retrieve a specific configuration item by name
     servicenow.itsm.configuration_item_info:
       name: "{{ vm_name }}"
+      instance:
+        host: "{{ SN_HOST }}"
+        grant_type: "password"
+        username: "{{ SN_USERNAME }}"
+        password: "{{ SN_PASSWORD }}"
     register: server_record
 
   - name: Delete configuration item
     servicenow.itsm.configuration_item:
       sys_id: "{{ server_record.record.sys_id }}"
       state: absent
+      instance:
+        host: "{{ SN_HOST }}"
+        grant_type: "password"
+        username: "{{ SN_USERNAME }}"
+        password: "{{ SN_PASSWORD }}"
