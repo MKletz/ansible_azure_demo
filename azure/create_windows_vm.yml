@@ -109,26 +109,4 @@
         grant_type: "password"
         username: "{{ SN_USERNAME }}"
         password: "{{ SN_PASSWORD }}"
-    register: snow_configuration_item
-
-  - name: Create a change task
-    servicenow.itsm.change_request_task:
-      configuration_item: "{{ snow_configuration_item.record.name }}"
-      change_request_number: "{{ snow_change_request.record.number }}"
-      assigned_to: "{{ SN_USERNAME }}"
-      state: closed
-      close_code: "successful"
-      close_notes: "See linked configuration item"
-      short_description: Deploy VM
-      description: Provision Windows VM in Azure
-      instance:
-        host: "{{ SN_HOST }}"
-        grant_type: "password"
-        username: "{{ SN_USERNAME }}"
-        password: "{{ SN_PASSWORD }}"
-
-  - name: Set fact vars
-    set_stats:
-      data:
-        snow_change_request: "{{ snow_change_request.record.number }}"
-        snow_configuration_item: "{{ snow_configuration_item.record.name }}"
+    when: requested_for is defined
