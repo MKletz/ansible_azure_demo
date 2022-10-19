@@ -128,6 +128,26 @@ controller_templates:
         variable: requested_for
         required: false
 
+- name: "AZURE / Remove Windows VM"
+  job_type: run
+  inventory: "Azure Inventory"
+  project: "ansible_azure_demo"
+  playbook: "azure/create_windows_vm.yml"
+  execution_environment: "Ansible Engine 2.9 execution environment"
+  credentials:
+    - "Azure"
+    - "SNOW Credential"
+  survey_enabled: true
+  survey:
+    name: ''
+    description: ''
+    spec:
+      - question_name: VM name
+        type: text
+        variable: vm_name
+        required: false
+        default: demo123
+
 - name: "WINDOWS / Security Settings"
   job_type: run
   inventory: "Azure Inventory"
