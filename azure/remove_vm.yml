@@ -11,7 +11,6 @@
       name: "{{ vm_name }}"
       remove_on_absent: all_autocreated
       state: absent
-    when: vm_name is defined
 
   - name: Retrieve a specific configuration item by name
     servicenow.itsm.configuration_item_info:
