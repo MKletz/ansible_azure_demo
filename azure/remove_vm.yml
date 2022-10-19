@@ -25,7 +25,7 @@
 
   - name: Delete configuration item
     servicenow.itsm.configuration_item:
-      sys_id: "{{ server.record.sys_id }}"
+      sys_id: "{{ server.records[0].sys_id }}"
       state: absent
       instance:
         host: "{{ SN_HOST }}"
