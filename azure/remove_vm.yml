@@ -11,6 +11,7 @@
       name: "{{ vm_name }}"
       remove_on_absent: all_autocreated
       state: absent
+    when: vm_name is defined
 
   - name: Retrieve a specific configuration item by name
     servicenow.itsm.configuration_item_info:
@@ -20,11 +21,11 @@
         grant_type: "password"
         username: "{{ SN_USERNAME }}"
         password: "{{ SN_PASSWORD }}"
-    register: server_record
+    register: server
 
   - name: Delete configuration item
     servicenow.itsm.configuration_item:
-      sys_id: "{{ server_record.record.sys_id }}"
+      sys_id: "{{ server.record.sys_id }}"
       state: absent
       instance:
         host: "{{ SN_HOST }}"
