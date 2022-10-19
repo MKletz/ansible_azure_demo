@@ -11,23 +11,6 @@
       public_ip_name: "{{ vm_name.replace('-','_') }}_ip_name"
       nic_name: "{{ vm_name.replace('-','_') }}_nic"
 
-  - name: Create change request
-    servicenow.itsm.change_request:
-      instance:
-        host: "{{ SN_HOST }}"
-        grant_type: "password"
-        username: "{{ SN_USERNAME }}"
-        password: "{{ SN_PASSWORD }}"
-      type: standard
-      state: new
-      requested_by: "{{ requested_for }}"
-      short_description: Deploy new web server
-      description: "Deploy new web server with content from {{ survey_site_source }}"
-      priority: low
-      risk: low
-      impact: low
-    register: snow_change_request
-
   - name: Create virtual network interface card
     azure_rm_networkinterface:
       resource_group: "{{ resource_group_name }}"
