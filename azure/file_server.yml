@@ -2,18 +2,17 @@
 - name: Configure File Server
   hosts: os_windows
   vars:
-    top_level_share: 'C:\branch_share\'
-    department_level_shares:
-      - "{{ top_level_share }}Accounting"
-      - "{{ top_level_share }}IT"
-      - "{{ top_level_share }}Facilities"
+    top_level_share: 'C:\branch_share\'      
 
   tasks:
   - name: Create standard shares
     ansible.windows.win_file:
       path: "{{ item }}"
       state: present
-    loop: {{ department_level_shares }}
+    loop:
+      - "{{ top_level_share }}Accounting"
+      - "{{ top_level_share }}IT"
+      - "{{ top_level_share }}Facilities"
 
   - name: Install file server features
     ansible.windows.win_feature:
