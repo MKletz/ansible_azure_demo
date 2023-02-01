@@ -21,8 +21,16 @@
     ansible.windows.win_reboot:
     when: feature_status.reboot_required
   
-  - name: Create standard shares
+  - name: Create directory structure
     ansible.windows.win_file:
       path: "{{ top_level_share }}{{ item }}"
       state: directory
-    loop: "{{ share_names }}" 
+    loop: "{{ share_names }}"
+
+  - name: Create SMB share
+    ansible.windows.win_share:
+      name: branch_share
+      description: standard branch share
+      path: "{{ top_level_share }}"
+      list: false
+      full: everyone
