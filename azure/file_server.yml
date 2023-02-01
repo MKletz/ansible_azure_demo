@@ -13,7 +13,7 @@
     ansible.windows.win_file:
       path: "{{ item }}"
       state: present
-    loop: department_level_shares
+    loop: {{ department_level_shares }}
 
   - name: Install file server features
     ansible.windows.win_feature:
