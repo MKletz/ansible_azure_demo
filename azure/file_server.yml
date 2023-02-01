@@ -7,12 +7,12 @@
   tasks:
   - name: Create standard shares
     ansible.windows.win_file:
-      path: "{{ item }}"
+      path: "{{ top_level_share }}{{ item }}"
       state: present
     loop:
-      - "{{ top_level_share }}Accounting"
-      - "{{ top_level_share }}IT"
-      - "{{ top_level_share }}Facilities"
+      - 'Accounting'
+      - 'IT'
+      - 'Facilities'
 
   - name: Install file server features
     ansible.windows.win_feature:
