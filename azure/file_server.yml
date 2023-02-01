@@ -2,18 +2,13 @@
 - name: Configure File Server
   hosts: os_windows
   vars:
-    top_level_share: 'C:\branch_share\'      
-
-  tasks:
-  - name: Create standard shares
-    ansible.windows.win_file:
-      path: "{{ top_level_share }}{{ item }}"
-      state: directory
-    loop:
+    top_level_share: 'C:\branch_share\'
+    share_names:
       - 'Accounting'
       - 'IT'
       - 'Facilities'
 
+  tasks:
   - name: Install file server features
     ansible.windows.win_feature:
       name:
@@ -25,3 +20,9 @@
   - name: Reboot when feature requires it
     ansible.windows.win_reboot:
     when: feature_status.reboot_required
+  
+  - name: Create standard shares
+    ansible.windows.win_file:
+      path: "{{ top_level_share }}{{ item }}"
+      state: directory
+    loop: "{{ share_names }}" 
