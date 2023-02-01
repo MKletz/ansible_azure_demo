@@ -8,7 +8,7 @@
   - name: Create standard shares
     ansible.windows.win_file:
       path: "{{ top_level_share }}{{ item }}"
-      state: present
+      state: directory
     loop:
       - 'Accounting'
       - 'IT'
