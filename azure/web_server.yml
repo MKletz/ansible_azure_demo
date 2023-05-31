@@ -19,6 +19,7 @@
   - name: Find IIS root directory contents
     ansible.windows.win_find:
       paths: "{{ iis_root }}"
+      recurse: True
     register: cleanup
     ignore_errors: true
 
