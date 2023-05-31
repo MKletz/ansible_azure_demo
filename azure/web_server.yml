@@ -16,13 +16,17 @@
       name: W3Svc
       state: started
 
-  - name: Remove default IIS files
+  - name: Find IIS root directory contents
+    ansible.windows.win_find:
+      paths: "{{ iis_root }}"
+    register: cleanup
+    ignore_errors: true
+
+  - name: Remove IIS root directory contents
     win_file:
-      path: "{{ iis_root }}\\{{ item }}"
+      path: "{{ item.path }}"
       state: absent
-    loop:
-      - "iisstart.htm"
-      - "iisstart.png"
+    with_items: "{{ cleanup.files }}"
 
   - name: Download site source
     win_get_url:
