@@ -80,7 +80,7 @@ controller_inventory_sources:
   source: azure_rm
   inventory: Azure Inventory
   credential: Azure
-  execution_environment: Ansible Engine 2.9 execution environment
+  execution_environment: "Default execution environment"
   overwrite: true
   update_on_launch: true
   source_vars:
@@ -99,7 +99,7 @@ controller_templates:
   inventory: "Azure Inventory"
   project: "ansible_azure_demo"
   playbook: "azure/create_azure_env.yml"
-  execution_environment: "Ansible Engine 2.9 execution environment"
+  execution_environment: "Default execution environment"
   credentials:
     - "Azure"
   survey_enabled: false
@@ -109,7 +109,7 @@ controller_templates:
   inventory: "Azure Inventory"
   project: "ansible_azure_demo"
   playbook: "azure/create_windows_vm.yml"
-  execution_environment: "Ansible Engine 2.9 execution environment"
+  execution_environment: "Default execution environment"
   credentials:
     - "Azure"
     - "SNOW Credential"
@@ -133,7 +133,7 @@ controller_templates:
   inventory: "Azure Inventory"
   project: "ansible_azure_demo"
   playbook: "azure/create_windows_vm.yml"
-  execution_environment: "Ansible Engine 2.9 execution environment"
+  execution_environment: "Default execution environment"
   credentials:
     - "Azure"
     - "SNOW Credential"
